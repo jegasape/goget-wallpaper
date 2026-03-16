@@ -1,14 +1,13 @@
 # goget-wallpaper
-
 > A quick tool I put together to download images concurrently with some control over it.
-
 ```bash
 go run main.go
 ```
+
 <br>
 
+<!-- COLLAGE_START -->
 <div align="center">
-
 <table>
   <tr>
     <td><img src="https://goget-wallpaper.jegasape.workers.dev?1" width="250" /></td>
@@ -29,6 +28,5 @@ go run main.go
     <td><img src="https://goget-wallpaper.jegasape.workers.dev?12" width="250" /></td>
   </tr>
 </table>
-
 </div>
-
+<!-- COLLAGE_END -->

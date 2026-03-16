@@ -1,0 +1,38 @@
+name: Rotate collage
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  shuffle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Run shuffle script
+        run: go run .github/scripts/shuffle.go
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          LAST_MSG=$(git log -1 --pretty=%s)
+          echo "Last commit: $LAST_MSG"
+          if echo "$LAST_MSG" | grep -q "chore: rotate collage"; then
+            git reset --soft HEAD~1
+          fi
+          git commit -m "chore: rotate collage"
+          git push --force origin main
